@@ -1,0 +1,60 @@
+﻿<h2>Basic File Upload</h2>
+@model List<string>
+
+@using (Html.BeginForm("Index",
+                        "FileUpload",
+                        FormMethod.Post,
+                        new { enctype = "multipart/form-data" }))
+{
+
+
+    <label for="file">Upload Image: </label>
+    <div>
+        <table border="1" bgcolor="YELLOW" height="100" width="300">
+            <tr>
+                <td>Select Gender</td>
+                <td><input @ViewBag.maleoption name="Gender" type="radio" value="Male">Format 1<br /><input @ViewBag.femaleoption name="Gender" type="radio" value="Female" />Format 2</td>
+                <td><input @ViewBag.shemaleoption name="Gender" type="radio" value="Shemale">Format 3<br /><input @ViewBag.tamaleoption name="Gender" type="radio" value="Tamale" />Format 4</td>
+            </tr>
+        </table>
+        @*Select Gender:<br />
+            Male @Html.RadioButton("Gender", "male")
+            Female @Html.RadioButton("Gender", "female")*@
+        @*Male<input type="radio" name="gender" value="male" />
+            Female<input type="radio" name="gender" value="female" />*@
+    </div>
+
+
+    <p><b>Введите информацию:</b></p>
+    <p>Название статьи <textarea rows="1" cols="45" name="text_1"></textarea></p>
+    <p>Ф.И.О. <textarea rows="1" cols="45" name="text_2"></textarea></p>
+    <p>Университет <textarea rows="1" cols="45" name="text_3"></textarea></p>
+    <p>Почта <textarea rows="1" cols="45" name="text_4"></textarea></p>
+    <p>ORCID или область исследования(для FORMAT 4) <textarea rows="1" cols="45" name="text_5"></textarea></p>
+
+    <input type="file" name="file" id="file" />
+    <br>
+    <br>
+
+    <input type="submit" value="Upload Image" />
+    <br>
+    <br>
+    @ViewBag.Message
+    <br>
+
+    <h2>Documents List</h2>
+
+    <table>
+        <tr>
+            <th>File Name</th>
+            <th>Link</th>
+        </tr>
+        @for (var i = 0; i <= Model.Count - 1; i++)
+        {
+            <tr>
+                <td>@Model[i].ToString() </td>
+                <td>@Html.ActionLink("Download", "Download", new { ImageName = @Model[i].ToString() }) </td>
+            </tr>
+        }
+    </table>
+}
